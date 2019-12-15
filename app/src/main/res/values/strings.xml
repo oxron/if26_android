@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">if26_android</string>
+    <string name="button">Ajouter tâche</string>
+    <string name="button2">Effacer tâche</string>
+</resources>
