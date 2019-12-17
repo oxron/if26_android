@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -61,6 +62,19 @@ public class MenuList extends AppCompatActivity {
                 addList();
             }
         });
+
+        mAdapter.setOnItemClickListener(new MinimalistAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                getItemActivity(position);
+            }
+        });
+    }
+
+    private void getItemActivity(long id) {
+        Intent myIntent = new Intent(getBaseContext(), Items.class);
+        myIntent.putExtra("MY_KEY", (int) id);
+        startActivity(myIntent);
     }
 
     private void addList() {

@@ -9,15 +9,16 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="389dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextName"
+        android:layout_width="393dp"
+        android:layout_height="542dp"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="49dp"
-        android:background="@android:color/white" />
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="165dp"
+        android:layout_marginBottom="24dp"
+        android:background="#F9F9F9"
+        android:elevation="8dp"/>
 
     <Button
         android:id="@+id/newListButton"

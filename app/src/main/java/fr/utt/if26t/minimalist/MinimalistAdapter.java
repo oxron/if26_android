@@ -15,21 +15,41 @@ import fr.utt.if26t.minimalist.contract.MinimalistContract;
 public class MinimalistAdapter extends RecyclerView.Adapter<MinimalistAdapter.MenuListViewHolder> {
     private Context mContext;
     private Cursor mCursor;
+    private OnItemClickListener mListener;
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
 
     public MinimalistAdapter(Context context, Cursor cursor) {
         mContext  = context;
         mCursor = cursor;
     }
 
-    public class MenuListViewHolder extends RecyclerView.ViewHolder {
+    public static class MenuListViewHolder extends RecyclerView.ViewHolder {
 
         public TextView nameList;
 
-        public MenuListViewHolder(@NonNull View itemView) {
+        public MenuListViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
 
             nameList =itemView.findViewById(R.id.textview_title_list);
+
+            itemView.setOnClickListener(new View.OnClickListener()  {
+                @Override
+                public void onClick(View v) {
+                    if (listener !=  null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -38,7 +58,7 @@ public class MinimalistAdapter extends RecyclerView.Adapter<MinimalistAdapter.Me
     public MenuListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.list_layout, parent, false);
-        return new MenuListViewHolder(view);
+        return new MenuListViewHolder(view, mListener);
     }
 
     @Override
