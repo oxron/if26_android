@@ -1,4 +1,4 @@
-package fr.utt.if26.if26_android;
+package fr.utt.if26t.minimalist;
 
 import org.junit.Test;
 
