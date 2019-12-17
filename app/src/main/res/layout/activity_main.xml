@@ -7,29 +7,50 @@
     android:layout_height="match_parent"
     tools:context=".MenuList">
 
-    <EditText
-        android:id="@+id/editTextName"
-        android:layout_width="292dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="389dp"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Entrez nom liste" />
+        android:layout_below="@+id/editTextName"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="49dp"
+        android:background="@android:color/white" />
 
     <Button
         android:id="@+id/newListButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="25dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="32dp"
         android:text="Ajouter" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="640dp"
-        android:layout_below="@+id/editTextName"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="29dp"
-        android:layout_marginBottom="17dp" />
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="246dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="104dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Ajouter une liste" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="124dp"
+        android:text="Mes Listes"
+        android:textColor="@android:color/black"
+        android:textSize="33sp" />
 
 </RelativeLayout>

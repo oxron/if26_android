@@ -85,7 +85,6 @@ public class MenuList extends AppCompatActivity {
         mAdapter.swapCursor(getAllItems());
     }
 
-
     private Cursor getAllItems() {
         return mDatabase.query(MinimalistContract.ListEntry.TABLE_NAME,
                 null,
