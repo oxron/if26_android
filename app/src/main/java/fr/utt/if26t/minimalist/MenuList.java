@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -68,6 +69,7 @@ public class MenuList extends AppCompatActivity {
             public void onItemClick(int position) {
                 getItemActivity(position);
             }
+
         });
     }
 
@@ -94,9 +96,29 @@ public class MenuList extends AppCompatActivity {
     }
 
     private void removeList(long id) {
-        mDatabase.delete(MinimalistContract.ListEntry.TABLE_NAME,
-                MinimalistContract.ListEntry._ID + "=" + id, null);
-        mAdapter.swapCursor(getAllItems());
+        Toast toastNotDeleted = Toast.makeText(getApplicationContext(), "La liste ne peut pas être supprimée", Toast.LENGTH_SHORT);
+        Toast toastDeleted = Toast.makeText(getApplicationContext(), "La liste a bien été supprimée", Toast.LENGTH_SHORT);
+
+        switch ((int) id) {
+            case 1 :
+                toastNotDeleted.show();
+                mAdapter.swapCursor(getAllItems());
+                break;
+            case 2 :
+                toastNotDeleted.show();
+                mAdapter.swapCursor(getAllItems());
+                break;
+            case 3 :
+                toastNotDeleted.show();
+                mAdapter.swapCursor(getAllItems());
+                break;
+            default :
+                mDatabase.delete(MinimalistContract.ListEntry.TABLE_NAME,
+                        MinimalistContract.ListEntry._ID + "=" + id, null);
+                toastDeleted.show();
+                mAdapter.swapCursor(getAllItems());
+        }
+
     }
 
     private Cursor getAllItems() {

@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.jar.Attributes;
+
 import fr.utt.if26t.minimalist.contract.MinimalistContract.*;
 
 import static fr.utt.if26t.minimalist.contract.MinimalistContract.ListEntry.TABLE_NAME;
@@ -12,7 +14,7 @@ import static fr.utt.if26t.minimalist.contract.MinimalistContract.ListEntry.TABL
 
 public class MenuListDBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "minimalist.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 4;
 
     public MenuListDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -28,6 +30,9 @@ public class MenuListDBHelper extends SQLiteOpenHelper {
                 ");";
 
         db.execSQL(SQL_CREATE_MENULIST_TABLE);
+        db.execSQL("insert into table_list(name) values('Prévu');");
+        db.execSQL("insert into table_list(name) values('Important');");
+        db.execSQL("insert into table_list(name) values('Favoris');");
     }
 
     @Override
