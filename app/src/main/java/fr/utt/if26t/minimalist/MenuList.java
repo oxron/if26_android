@@ -16,15 +16,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.List;
-
+import fr.utt.if26t.minimalist.adapter.ListAdapter;
 import fr.utt.if26t.minimalist.contract.MinimalistContract;
 import fr.utt.if26t.minimalist.datahelper.MenuListDBHelper;
 
 public class MenuList extends AppCompatActivity {
     private EditText mEditTextName;
     private SQLiteDatabase mDatabase;
-    private MinimalistAdapter mAdapter;
+    private ListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,7 @@ public class MenuList extends AppCompatActivity {
 
         RecyclerView recyclerView =  findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new MinimalistAdapter(this, getAllItems());
+        mAdapter = new ListAdapter(this, getAllItems());
         recyclerView.setAdapter(mAdapter);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
@@ -64,7 +63,7 @@ public class MenuList extends AppCompatActivity {
             }
         });
 
-        mAdapter.setOnItemClickListener(new MinimalistAdapter.OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new ListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 getItemActivity(position);

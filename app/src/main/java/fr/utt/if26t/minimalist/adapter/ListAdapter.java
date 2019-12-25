@@ -1,19 +1,19 @@
-package fr.utt.if26t.minimalist;
+package fr.utt.if26t.minimalist.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import fr.utt.if26t.minimalist.R;
 import fr.utt.if26t.minimalist.contract.MinimalistContract;
 
-public class MinimalistAdapter extends RecyclerView.Adapter<MinimalistAdapter.MenuListViewHolder> {
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MenuListViewHolder> {
     private Context mContext;
     private Cursor mCursor;
     private OnItemClickListener mListener;
@@ -26,7 +26,7 @@ public class MinimalistAdapter extends RecyclerView.Adapter<MinimalistAdapter.Me
         mListener = listener;
     }
 
-    public MinimalistAdapter(Context context, Cursor cursor) {
+    public ListAdapter(Context context, Cursor cursor) {
         mContext  = context;
         mCursor = cursor;
     }
@@ -35,12 +35,12 @@ public class MinimalistAdapter extends RecyclerView.Adapter<MinimalistAdapter.Me
 
         public TextView nameList;
 
-        public MenuListViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
-            super(itemView);
+        public MenuListViewHolder(@NonNull View listView, final OnItemClickListener listener) {
+            super(listView);
 
-            nameList =itemView.findViewById(R.id.textview_title_list);
+            nameList = listView.findViewById(R.id.listTextView);
 
-            itemView.setOnClickListener(new View.OnClickListener()  {
+            listView.setOnClickListener(new View.OnClickListener()  {
                 @Override
                 public void onClick(View v) {
                     if (listener !=  null) {
