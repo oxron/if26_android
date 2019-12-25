@@ -15,7 +15,7 @@ import static fr.utt.if26t.minimalist.contract.MinimalistContract.ListEntry.TABL
 
 public class MenuListDBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "minimalist.db";
-    public static final int DATABASE_VERSION = 7;
+    public static final int DATABASE_VERSION = 8;
 
     public MenuListDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -36,6 +36,7 @@ public class MenuListDBHelper extends SQLiteOpenHelper {
                 ItemEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 ItemEntry.COLUMN_NOTE + " TEXT, " +
                 ItemEntry.COLUMN_IMPORTANT + " INTEGER, " +
+                ItemEntry.COLUMN_FAVORIS + " INTEGER," +
                 ItemEntry.COLUMN_DONE + " INTEGER "+
                 ");";
 

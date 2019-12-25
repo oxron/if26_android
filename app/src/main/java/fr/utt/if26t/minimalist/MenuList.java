@@ -51,7 +51,7 @@ public class MenuList extends AppCompatActivity {
         }).attachToRecyclerView(recyclerView);
 
 
-        mEditTextName = findViewById(R.id.editTextName);
+        mEditTextName = findViewById(R.id.editTextNameList);
 
         Button buttonAdd = findViewById(R.id.newListButton);
 
