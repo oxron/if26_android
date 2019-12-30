@@ -15,7 +15,7 @@ import static fr.utt.if26t.minimalist.contract.MinimalistContract.ListEntry.TABL
 
 public class MenuListDBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "minimalist.db";
-    public static final int DATABASE_VERSION = 8;
+    public static final int DATABASE_VERSION = 10;
 
     public MenuListDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -36,17 +36,18 @@ public class MenuListDBHelper extends SQLiteOpenHelper {
                 ItemEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 ItemEntry.COLUMN_NOTE + " TEXT, " +
                 ItemEntry.COLUMN_IMPORTANT + " INTEGER, " +
-                ItemEntry.COLUMN_FAVORIS + " INTEGER," +
-                ItemEntry.COLUMN_DONE + " INTEGER "+
+                ItemEntry.COLUMN_DATE + " TEXT," +
+                ItemEntry.COLUMN_DONE + " INTEGER, "+
+                ItemEntry.COLUMN_LIST + " INTEGER " +
                 ");";
 
         db.execSQL(SQL_CREATE_MENULIST_TABLE);
         db.execSQL(SQL_CREATE_ITEMLIST_TABLE);
-        db.execSQL("insert into table_list(name) values('Prévu');");
+        db.execSQL("insert into table_list(name) values('Tâches');");
         db.execSQL("insert into table_list(name) values('Important');");
-        db.execSQL("insert into table_list(name) values('Favoris');");
+        db.execSQL("insert into table_list(name) values('Planifiées');");
 
-        db.execSQL("insert into table_item(name, important, done) values('Favoris', 0, 0);");
+        //db.execSQL("insert into table_item(name, important, done) values('Favoris', 0, 0);");
     }
 
     @Override

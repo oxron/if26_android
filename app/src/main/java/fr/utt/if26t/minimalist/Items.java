@@ -1,5 +1,6 @@
 package fr.utt.if26t.minimalist;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -10,10 +11,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import fr.utt.if26t.minimalist.adapter.ItemAdapter;
 import fr.utt.if26t.minimalist.adapter.ListAdapter;
@@ -31,17 +35,17 @@ public class Items extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_items);
 
-        intValue = getIntent().getExtras().getInt("MY_KEY");
+        intValue = getIntent().getExtras().getInt("KEY_LIST");
 
         mTextView = findViewById(R.id.positionTextView);
         mTextView.setText(String.valueOf(intValue));
 
-        Button mButtonAdd  = findViewById(R.id.buttonAdd);
+        FloatingActionButton mButtonAdd  = findViewById(R.id.buttonAdd);
         mButtonAdd.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
-                addItem();
+                addItem(intValue);
             }
         });
 
@@ -67,8 +71,9 @@ public class Items extends AppCompatActivity {
         }).attachToRecyclerView(recyclerView);
     }
 
-    public void addItem() {
+    public void addItem(int id) {
         Intent myIntent = new Intent(getBaseContext(), AddItem.class);
+        myIntent.putExtra("KEY_LIST", id);
         startActivity(myIntent);
     }
 
@@ -79,12 +84,27 @@ public class Items extends AppCompatActivity {
     }
 
     private Cursor getAllItems() {
+        String[] columns = {MinimalistContract.ItemEntry.COLUMN_NAME, MinimalistContract.ItemEntry.COLUMN_LIST};
+
         return mDatabase.query(MinimalistContract.ItemEntry.TABLE_NAME,
-                null,
-                null,
+                 null,
+                MinimalistContract.ItemEntry.COLUMN_LIST + " = " + intValue,
                 null,
                 null,
                 null,
                 null);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        //replaces the default 'Back' button action
+        if(keyCode==KeyEvent.KEYCODE_BACK)
+        {
+            //do whatever you want the 'Back' button to do
+            //as an example the 'Back' button is set to start a new Activity named 'NewActivity'
+            this.startActivity(new Intent(Items.this,MenuList.class));
+        }
+        return true;
     }
 }

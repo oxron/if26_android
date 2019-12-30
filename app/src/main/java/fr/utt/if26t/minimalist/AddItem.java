@@ -21,11 +21,13 @@ public class AddItem extends AppCompatActivity {
     private CheckBox mImportant, mFavoris, mDone;
     private SQLiteDatabase mDatabase;
     private ListAdapter mAdapter;
+    private Integer mIdList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
+        mIdList = getIntent().getExtras().getInt("KEY_LIST");
 
         MenuListDBHelper dbHelper = new MenuListDBHelper(this);
         mDatabase = dbHelper.getWritableDatabase();
@@ -33,7 +35,6 @@ public class AddItem extends AppCompatActivity {
         mNom = findViewById(R.id.editTextNameItem);
         mNote = findViewById(R.id.editTextNote);
         mImportant = findViewById(R.id.checkBoxImportant);
-        mFavoris = findViewById(R.id.checkBoxFavoris);
         mDone = findViewById(R.id.checkBoxDone);
 
         Button buttonAdd = findViewById(R.id.buttonAddItem);
@@ -45,8 +46,6 @@ public class AddItem extends AppCompatActivity {
                 addList();
             }
         });
-
-
     }
 
 
@@ -59,18 +58,12 @@ public class AddItem extends AppCompatActivity {
 
         String name = mNom.getText().toString();
         String note = mNote.getText().toString();
-        Integer important, favoris, done;
+        Integer important, done;
 
         if (mImportant.isChecked()) {
             important = 1;
         } else {
             important = 0;
-        }
-
-        if (mFavoris.isChecked()) {
-            favoris = 1;
-        } else {
-            favoris = 0;
         }
 
         if (mDone.isChecked()) {
@@ -84,12 +77,13 @@ public class AddItem extends AppCompatActivity {
         cv.put(MinimalistContract.ItemEntry.COLUMN_NAME, name);
         cv.put(MinimalistContract.ItemEntry.COLUMN_NOTE, note);
         cv.put(MinimalistContract.ItemEntry.COLUMN_IMPORTANT, important);
-        cv.put(MinimalistContract.ItemEntry.COLUMN_FAVORIS, favoris);
+        cv.put(MinimalistContract.ItemEntry.COLUMN_LIST, mIdList);
         cv.put(MinimalistContract.ItemEntry.COLUMN_DONE, done);
 
         mDatabase.insert(MinimalistContract.ItemEntry.TABLE_NAME, null, cv);
 
         Intent myIntent = new Intent(getBaseContext(), Items.class);
+        myIntent.putExtra("KEY_LIST", (int) mIdList);
         startActivity(myIntent);
     }
 }

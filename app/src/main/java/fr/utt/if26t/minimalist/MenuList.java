@@ -16,12 +16,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import fr.utt.if26t.minimalist.adapter.ListAdapter;
 import fr.utt.if26t.minimalist.contract.MinimalistContract;
 import fr.utt.if26t.minimalist.datahelper.MenuListDBHelper;
 
-public class MenuList extends AppCompatActivity {
-    private EditText mEditTextName;
+public class MenuList extends AppCompatActivity implements AddListDialog.AddListDialogListener {
     private SQLiteDatabase mDatabase;
     private ListAdapter mAdapter;
 
@@ -50,18 +51,14 @@ public class MenuList extends AppCompatActivity {
             }
         }).attachToRecyclerView(recyclerView);
 
+        FloatingActionButton fab = findViewById(R.id.fab);
 
-        mEditTextName = findViewById(R.id.editTextNameList);
-
-        Button buttonAdd = findViewById(R.id.newListButton);
-
-        buttonAdd.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                addList();
-            }
-        });
+        fab.setOnClickListener(new View.OnClickListener() {
+                                   @Override
+                                   public void onClick(View v) {
+                                       openDialog();
+                                   }
+                               });
 
         mAdapter.setOnItemClickListener(new ListAdapter.OnItemClickListener() {
             @Override
@@ -74,24 +71,13 @@ public class MenuList extends AppCompatActivity {
 
     private void getItemActivity(long id) {
         Intent myIntent = new Intent(getBaseContext(), Items.class);
-        myIntent.putExtra("MY_KEY", (int) id);
+        myIntent.putExtra("KEY_LIST", (int) id);
         startActivity(myIntent);
     }
 
-    private void addList() {
-        if (mEditTextName.getText().toString().trim().length() == 0 ) {
-            return;
-        }
-
-        String name = mEditTextName.getText().toString();
-        ContentValues cv = new ContentValues();
-        cv.put(MinimalistContract.ListEntry.COLUMN_NAME, name);
-        //SI je veux rajouter un élément à une colomne je le fait là
-
-        mDatabase.insert(MinimalistContract.ListEntry.TABLE_NAME, null, cv);
-        mAdapter.swapCursor(getAllItems());
-
-        mEditTextName.getText().clear();
+    public void openDialog() {
+        AddListDialog dialog = new AddListDialog();
+        dialog.show(getSupportFragmentManager(), "Ajouter une liste");
     }
 
     private void removeList(long id) {
@@ -128,5 +114,19 @@ public class MenuList extends AppCompatActivity {
                 null,
                 null,
                 null);
+    }
+
+    @Override
+    public void applyTexts(String nameList) {
+        if (nameList.trim().length() == 0 ) {
+            return;
+        }
+
+        ContentValues cv = new ContentValues();
+        cv.put(MinimalistContract.ListEntry.COLUMN_NAME, nameList);
+        //SI je veux rajouter un élément à une colomne je le fait là
+
+        mDatabase.insert(MinimalistContract.ListEntry.TABLE_NAME, null, cv);
+        mAdapter.swapCursor(getAllItems());
     }
 }

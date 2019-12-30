@@ -7,40 +7,31 @@
     android:layout_height="match_parent"
     tools:context=".MenuList">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="24dp"
+        android:contentDescription=""
+        android:src="@drawable/ic_add_black_24dp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="393dp"
-        android:layout_height="542dp"
+        android:layout_width="388dp"
+        android:layout_height="610dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="9dp"
-        android:layout_marginTop="165dp"
-        android:layout_marginBottom="24dp"
-        android:background="#F9F9F9"
-        android:elevation="8dp"/>
+        android:layout_marginTop="99dp"
+        android:layout_marginBottom="22dp"
+        android:background="#F9F9F9">
 
-    <Button
-        android:id="@+id/newListButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="104dp"
-        android:layout_marginEnd="32dp"
-        android:text="Ajouter" />
-
-    <EditText
-        android:id="@+id/editTextNameList"
-        android:layout_width="246dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="104dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Ajouter une liste" />
+    </androidx.recyclerview.widget.RecyclerView>
 
     <TextView
         android:id="@+id/textView"
@@ -52,6 +43,14 @@
         android:layout_marginEnd="124dp"
         android:text="Mes Listes"
         android:textColor="@android:color/black"
-        android:textSize="33sp" />
+        android:textSize="33sp" /><![CDATA[
 
+
+
+    />
+
+
+
+
+]]>
 </RelativeLayout>

@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Nom" />
+        android:hint="Nom" />
 
     <EditText
         android:id="@+id/editTextNote"
@@ -17,16 +17,10 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Note" />
+        android:hint="Note" />
 
     <CheckBox
         android:id="@+id/checkBoxImportant"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="favoris" />
-
-    <CheckBox
-        android:id="@+id/checkBoxFavoris"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="important" />
@@ -35,7 +29,7 @@
         android:id="@+id/checkBoxDone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="important" />
+        android:text="Tâche Réalisée ?" />
 
     <Button
         android:id="@+id/buttonAddItem"
