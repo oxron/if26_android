@@ -40,26 +40,14 @@ public class MenuList extends AppCompatActivity implements AddListDialog.AddList
         MenuListDBHelper dbHelper = new MenuListDBHelper(this);
         mDatabase = dbHelper.getWritableDatabase();
 
-        //TODO
         RecyclerView recyclerView =  findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        Cursor test = getAllItems();
 
-        this.dataList= new ArrayList<>();
-
-        for(test.moveToFirst(); !test.isAfterLast(); test.moveToNext()) {
-            //dataList.add(test.getString(test.getColumnIndex(MinimalistContract.ListEntry.COLUMN_NAME)));
-            ListItemModel temp = new ListItemModel(
-                    test.getLong(test.getColumnIndex(MinimalistContract.ListEntry._ID)),
-                    test.getString(test.getColumnIndex(MinimalistContract.ListEntry.COLUMN_NAME)));
-
-            dataList.add(temp);
-        }
+        getDataList();
 
         Log.d("DEBUG", "onCreate: " + this.dataList);
 
-
-        mAdapter = new ListAdapter(this, this.dataList);
+        mAdapter = new ListAdapter(this, getAllItems(),this.dataList);
         recyclerView.setAdapter(mAdapter);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
@@ -112,13 +100,17 @@ public class MenuList extends AppCompatActivity implements AddListDialog.AddList
             case 2 :
             case 3 :
                 toastNotDeleted.show();
-                mAdapter.swapCursor(getAllItems());
+                getDataList();
+                mAdapter.swapCursor(dataList);
                 break;
             default :
                 mDatabase.delete(MinimalistContract.ListEntry.TABLE_NAME,
                         MinimalistContract.ListEntry._ID + "=" + id, null);
                 toastDeleted.show();
-                mAdapter.swapCursor(getAllItems());
+                getDataList();
+                System.out.println(this.dataList);
+                mAdapter.swapCursor(dataList);
+                mAdapter.notifyDataSetChanged();
         }
 
     }
@@ -141,9 +133,26 @@ public class MenuList extends AppCompatActivity implements AddListDialog.AddList
 
         ContentValues cv = new ContentValues();
         cv.put(MinimalistContract.ListEntry.COLUMN_NAME, nameList);
-        //SI je veux rajouter un élément à une colomne je le fait là
 
         mDatabase.insert(MinimalistContract.ListEntry.TABLE_NAME, null, cv);
-        mAdapter.swapCursor(getAllItems());
+        getDataList();
+        mAdapter.swapCursor(dataList);
     }
+
+    public void getDataList() {
+        Cursor test = getAllItems();
+
+        this.dataList= new ArrayList<>();
+
+        for(test.moveToFirst(); !test.isAfterLast(); test.moveToNext()) {
+            //dataList.add(test.getString(test.getColumnIndex(MinimalistContract.ListEntry.COLUMN_NAME)));
+            ListItemModel temp = new ListItemModel(
+                    test.getLong(test.getColumnIndex(MinimalistContract.ListEntry._ID)),
+                    test.getString(test.getColumnIndex(MinimalistContract.ListEntry.COLUMN_NAME)));
+
+            dataList.add(temp);
+        }
+
+    }
+
 }

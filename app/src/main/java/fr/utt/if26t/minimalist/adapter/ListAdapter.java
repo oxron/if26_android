@@ -18,7 +18,7 @@ import fr.utt.if26t.minimalist.R;
 import fr.utt.if26t.minimalist.contract.MinimalistContract;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MenuListViewHolder> {
-    private final ArrayList<ListItemModel> dataList;
+    private ArrayList<ListItemModel> dataList;
     private Context mContext;
     private Cursor mCursor;
     private OnItemClickListener mListener;
@@ -31,9 +31,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MenuListViewHo
         mListener = listener;
     }
 
-    public ListAdapter(Context context, ArrayList<ListItemModel> dataList) {
+    public ListAdapter(Context context, Cursor cursor, ArrayList<ListItemModel> dataList) {
         mContext  = context;
-        //mCursor = cursor;
+        mCursor = cursor;
         this.dataList = dataList;
     }
 
@@ -44,10 +44,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MenuListViewHo
 
         public MenuListViewHolder(@NonNull View listView, final OnItemClickListener listener) {
             super(listView);
-            listView.setTag(this);
-            //listView.setOnClickListener((View.OnClickListener) mListener);
-            RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) listView.getTag();
-            final long id = viewHolder.getItemId();
+
+//            RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) listView.getTag();
+
 
             nameList = listView.findViewById(R.id.listTextView);
 
@@ -55,10 +54,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MenuListViewHo
                 @Override
                 public void onClick(View v) {
                     if (listener !=  null) {
-//                        long id = mCursor.getLong(mCursor.getColumnIndex(MinimalistContract.ListEntry._ID));
-
                         int position = getAdapterPosition();
-
                         Long positionDatabase = dataList.get(position).getId();
 
 //                        if (position != RecyclerView.NO_POSITION) {
@@ -102,15 +98,17 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MenuListViewHo
         return this.dataList.size();
     }
 
-    public void swapCursor(Cursor newCursor) {
-        if (mCursor != null) {
-            mCursor.close();
-        }
-
-        mCursor = newCursor;
-
-        if (newCursor != null) {
-            notifyDataSetChanged();
-        }
+    public void swapCursor(ArrayList<ListItemModel> newDataList) {
+//        if (mCursor != null) {
+//            mCursor.close();
+//        }
+//
+//        mCursor = newCursor;
+//
+//        if (newCursor != null) {
+//            notifyDataSetChanged();
+//        }
+        dataList = newDataList;
+        notifyDataSetChanged();
     }
 }
