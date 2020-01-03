@@ -75,16 +75,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemsViewHolde
 
     @Override
     public int getItemCount() {
-
         return (this.dataItems != null) ? this.dataItems.size() : 0;
-
-//        if (this.dataItems == null)
-//        {
-//            return 0;
-//        }
-//        else {
-//            return this.dataItems.size();
-//        }
     }
 
     public void swapDataItems(ArrayList<ItemModel> newDataItems) {

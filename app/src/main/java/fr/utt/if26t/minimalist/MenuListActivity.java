@@ -101,6 +101,8 @@ public class MenuListActivity extends AppCompatActivity implements AddListDialog
             default :
                 mDatabase.delete(MinimalistContract.ListEntry.TABLE_NAME,
                         MinimalistContract.ListEntry._ID + "=" + id, null);
+                mDatabase.delete(MinimalistContract.ItemEntry.TABLE_NAME,
+                        MinimalistContract.ItemEntry.COLUMN_LIST + "=" + id, null);
                 toastDeleted.show();
                 getDataList();
                 mAdapter.swapDataList(dataList);
