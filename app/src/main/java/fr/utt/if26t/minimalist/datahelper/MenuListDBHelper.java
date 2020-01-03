@@ -1,21 +1,16 @@
 package fr.utt.if26t.minimalist.datahelper;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.util.jar.Attributes;
-
 import fr.utt.if26t.minimalist.contract.MinimalistContract.*;
-
-import static fr.utt.if26t.minimalist.contract.MinimalistContract.ListEntry.TABLE_NAME;
 
 
 public class MenuListDBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "minimalist.db";
-    public static final int DATABASE_VERSION = 10;
+    public static final int DATABASE_VERSION = 18;
 
     public MenuListDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -36,6 +31,7 @@ public class MenuListDBHelper extends SQLiteOpenHelper {
                 ItemEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 ItemEntry.COLUMN_NOTE + " TEXT, " +
                 ItemEntry.COLUMN_IMPORTANT + " INTEGER, " +
+                ItemEntry.COLUMN_PLANED + " INTEGER," +
                 ItemEntry.COLUMN_DATE + " TEXT," +
                 ItemEntry.COLUMN_DONE + " INTEGER, "+
                 ItemEntry.COLUMN_LIST + " INTEGER " +

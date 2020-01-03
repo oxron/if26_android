@@ -1,10 +1,10 @@
-package fr.utt.if26t.minimalist;
+package fr.utt.if26t.minimalist.model;
 
-public class ListItemModel {
+public class ListModel {
     private Long id;
     private String name;
 
-    public ListItemModel(Long id, String name) {
+    public ListModel(Long id, String name) {
         this.id = id;
         this.name = name;
     }

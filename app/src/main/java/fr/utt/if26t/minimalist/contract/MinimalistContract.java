@@ -17,6 +17,7 @@ public class MinimalistContract {
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_NOTE  = "note";
         public static final String COLUMN_IMPORTANT = "important";
+        public static final String COLUMN_PLANED = "planed";
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_DONE = "done";
         public static final String COLUMN_LIST = "list";

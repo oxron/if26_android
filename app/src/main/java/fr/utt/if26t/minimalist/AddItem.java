@@ -77,12 +77,14 @@ public class AddItem extends AppCompatActivity {
         cv.put(MinimalistContract.ItemEntry.COLUMN_NAME, name);
         cv.put(MinimalistContract.ItemEntry.COLUMN_NOTE, note);
         cv.put(MinimalistContract.ItemEntry.COLUMN_IMPORTANT, important);
-        cv.put(MinimalistContract.ItemEntry.COLUMN_LIST, mIdList);
+        cv.put(MinimalistContract.ItemEntry.COLUMN_PLANED, 0);
+        cv.put(MinimalistContract.ItemEntry.COLUMN_DATE, "");
         cv.put(MinimalistContract.ItemEntry.COLUMN_DONE, done);
+        cv.put(MinimalistContract.ItemEntry.COLUMN_LIST, mIdList);
 
         mDatabase.insert(MinimalistContract.ItemEntry.TABLE_NAME, null, cv);
 
-        Intent myIntent = new Intent(getBaseContext(), Items.class);
+        Intent myIntent = new Intent(getBaseContext(), ItemsActivity.class);
         myIntent.putExtra("KEY_LIST", (int) mIdList);
         startActivity(myIntent);
     }

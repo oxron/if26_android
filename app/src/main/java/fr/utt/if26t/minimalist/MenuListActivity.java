@@ -11,26 +11,23 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import fr.utt.if26t.minimalist.adapter.ListAdapter;
 import fr.utt.if26t.minimalist.contract.MinimalistContract;
 import fr.utt.if26t.minimalist.datahelper.MenuListDBHelper;
+import fr.utt.if26t.minimalist.model.ListModel;
 
-public class MenuList extends AppCompatActivity implements AddListDialog.AddListDialogListener {
+public class MenuListActivity extends AppCompatActivity implements AddListDialog.AddListDialogListener {
     private SQLiteDatabase mDatabase;
     private ListAdapter mAdapter;
 
-    private ArrayList<ListItemModel> dataList;
+    private ArrayList<ListModel> dataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +42,7 @@ public class MenuList extends AppCompatActivity implements AddListDialog.AddList
 
         getDataList();
 
-        Log.d("DEBUG", "onCreate: " + this.dataList);
-
-        mAdapter = new ListAdapter(this, getAllItems(),this.dataList);
+        mAdapter = new ListAdapter(this, this.dataList);
         recyclerView.setAdapter(mAdapter);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
@@ -81,7 +76,7 @@ public class MenuList extends AppCompatActivity implements AddListDialog.AddList
     }
 
     private void getItemActivity(long id) {
-        Intent myIntent = new Intent(getBaseContext(), Items.class);
+        Intent myIntent = new Intent(getBaseContext(), ItemsActivity.class);
         myIntent.putExtra("KEY_LIST", (int) id);
         startActivity(myIntent);
     }
@@ -101,18 +96,15 @@ public class MenuList extends AppCompatActivity implements AddListDialog.AddList
             case 3 :
                 toastNotDeleted.show();
                 getDataList();
-                mAdapter.swapCursor(dataList);
+                mAdapter.swapDataList(dataList);
                 break;
             default :
                 mDatabase.delete(MinimalistContract.ListEntry.TABLE_NAME,
                         MinimalistContract.ListEntry._ID + "=" + id, null);
                 toastDeleted.show();
                 getDataList();
-                System.out.println(this.dataList);
-                mAdapter.swapCursor(dataList);
-                mAdapter.notifyDataSetChanged();
+                mAdapter.swapDataList(dataList);
         }
-
     }
 
     private Cursor getAllItems() {
@@ -136,23 +128,21 @@ public class MenuList extends AppCompatActivity implements AddListDialog.AddList
 
         mDatabase.insert(MinimalistContract.ListEntry.TABLE_NAME, null, cv);
         getDataList();
-        mAdapter.swapCursor(dataList);
+        mAdapter.swapDataList(dataList);
     }
 
     public void getDataList() {
-        Cursor test = getAllItems();
+        Cursor allLists = getAllItems();
 
         this.dataList= new ArrayList<>();
 
-        for(test.moveToFirst(); !test.isAfterLast(); test.moveToNext()) {
+        for(allLists.moveToFirst(); !allLists.isAfterLast(); allLists.moveToNext()) {
             //dataList.add(test.getString(test.getColumnIndex(MinimalistContract.ListEntry.COLUMN_NAME)));
-            ListItemModel temp = new ListItemModel(
-                    test.getLong(test.getColumnIndex(MinimalistContract.ListEntry._ID)),
-                    test.getString(test.getColumnIndex(MinimalistContract.ListEntry.COLUMN_NAME)));
+            ListModel temp = new ListModel(
+                    allLists.getLong(allLists.getColumnIndex(MinimalistContract.ListEntry._ID)),
+                    allLists.getString(allLists.getColumnIndex(MinimalistContract.ListEntry.COLUMN_NAME)));
 
             dataList.add(temp);
         }
-
     }
-
 }

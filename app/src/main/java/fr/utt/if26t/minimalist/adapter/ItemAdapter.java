@@ -10,12 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 import fr.utt.if26t.minimalist.R;
 import fr.utt.if26t.minimalist.contract.MinimalistContract;
+import fr.utt.if26t.minimalist.model.ItemModel;
+import fr.utt.if26t.minimalist.model.ListModel;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemsViewHolder>{
+    private ArrayList<ItemModel> dataItems;
     private Context mContext;
-    private Cursor mCursor;
     private OnItemClickListener mListener;
 
 
@@ -27,12 +31,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemsViewHolde
         mListener = listener;
     }
 
-    public ItemAdapter(Context context, Cursor cursor) {
+    public ItemAdapter(Context context, ArrayList<ItemModel> dataItems) {
         mContext  = context;
-        mCursor = cursor;
+        this.dataItems = dataItems;
     }
 
-    public static class ItemsViewHolder extends RecyclerView.ViewHolder {
+    public class ItemsViewHolder extends RecyclerView.ViewHolder {
 
         public TextView nameItem;
 
@@ -46,9 +50,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemsViewHolde
                 public void onClick(View v) {
                     if (listener !=  null) {
                         int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
-                        }
+                        Long positionDatabase = dataItems.get(position).getId();
+                        listener.onItemClick((positionDatabase.intValue()));
                     }
                 }
             });
@@ -65,31 +68,27 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemsViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull ItemAdapter.ItemsViewHolder holder, int position) {
-        if (!mCursor.moveToPosition(position)) {
-            return;
-        }
-
-        String nameItem = mCursor.getString(mCursor.getColumnIndex(MinimalistContract.ListEntry.COLUMN_NAME));
-        long id = mCursor.getLong(mCursor.getColumnIndex(MinimalistContract.ListEntry._ID));
-
-        holder.nameItem.setText(nameItem);
-        holder.itemView.setTag(id);
+        holder.nameItem.setText(this.dataItems.get(position).getName());
+        holder.itemView.setTag(this.dataItems.get(position).getId());
     }
+
 
     @Override
     public int getItemCount() {
-        return mCursor.getCount();
+
+        return (this.dataItems != null) ? this.dataItems.size() : 0;
+
+//        if (this.dataItems == null)
+//        {
+//            return 0;
+//        }
+//        else {
+//            return this.dataItems.size();
+//        }
     }
 
-    public void swapCursor(Cursor newCursor) {
-        if (mCursor != null) {
-            mCursor.close();
-        }
-
-        mCursor = newCursor;
-
-        if (newCursor != null) {
-            notifyDataSetChanged();
-        }
+    public void swapDataItems(ArrayList<ItemModel> newDataItems) {
+        dataItems = newDataItems;
+        notifyDataSetChanged();
     }
 }

@@ -1,7 +1,6 @@
 package fr.utt.if26t.minimalist.adapter;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import fr.utt.if26t.minimalist.ListItemModel;
+import fr.utt.if26t.minimalist.model.ListModel;
 import fr.utt.if26t.minimalist.R;
-import fr.utt.if26t.minimalist.contract.MinimalistContract;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MenuListViewHolder> {
-    private ArrayList<ListItemModel> dataList;
+    private ArrayList<ListModel> dataList;
     private Context mContext;
-    private Cursor mCursor;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
@@ -31,9 +27,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MenuListViewHo
         mListener = listener;
     }
 
-    public ListAdapter(Context context, Cursor cursor, ArrayList<ListItemModel> dataList) {
+    public ListAdapter(Context context, ArrayList<ListModel> dataList) {
         mContext  = context;
-        mCursor = cursor;
         this.dataList = dataList;
     }
 
@@ -45,9 +40,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MenuListViewHo
         public MenuListViewHolder(@NonNull View listView, final OnItemClickListener listener) {
             super(listView);
 
-//            RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) listView.getTag();
-
-
             nameList = listView.findViewById(R.id.listTextView);
 
             listView.setOnClickListener(new View.OnClickListener()  {
@@ -56,10 +48,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MenuListViewHo
                     if (listener !=  null) {
                         int position = getAdapterPosition();
                         Long positionDatabase = dataList.get(position).getId();
-
-//                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick((positionDatabase.intValue()));
-//                        }
+                        listener.onItemClick((positionDatabase.intValue()));
                     }
                 }
             });
@@ -76,17 +65,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MenuListViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MenuListViewHolder holder, int position) {
-//        if (!mCursor.moveToPosition(position)) {
-//            return;
-//        }
-//
-//        String nameList = mCursor.getString(mCursor.getColumnIndex(MinimalistContract.ListEntry.COLUMN_NAME));
-//        long id = mCursor.getLong(mCursor.getColumnIndex(MinimalistContract.ListEntry._ID));
-//
-//        holder.nameList.setText(nameList);
-//        holder.itemView.setTag(id);
-
-        //TODO voir pour avoir un ensemble clé valeur avec index
         holder.nameList.setText(this.dataList.get(position).getName());
         holder.itemView.setTag(this.dataList.get(position).getId());
 
@@ -94,20 +72,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MenuListViewHo
 
     @Override
     public int getItemCount() {
-//        return mCursor.getCount();
         return this.dataList.size();
     }
 
-    public void swapCursor(ArrayList<ListItemModel> newDataList) {
-//        if (mCursor != null) {
-//            mCursor.close();
-//        }
-//
-//        mCursor = newCursor;
-//
-//        if (newCursor != null) {
-//            notifyDataSetChanged();
-//        }
+    public void swapDataList(ArrayList<ListModel> newDataList) {
         dataList = newDataList;
         notifyDataSetChanged();
     }
