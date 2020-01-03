@@ -50,6 +50,8 @@ public class Items extends AppCompatActivity {
         });
 
 
+
+
         MenuListDBHelper dbHelper = new MenuListDBHelper(this);
         mDatabase = dbHelper.getWritableDatabase();
 

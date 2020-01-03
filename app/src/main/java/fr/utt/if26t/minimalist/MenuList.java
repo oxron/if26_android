@@ -11,12 +11,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import fr.utt.if26t.minimalist.adapter.ListAdapter;
 import fr.utt.if26t.minimalist.contract.MinimalistContract;
@@ -26,6 +30,8 @@ public class MenuList extends AppCompatActivity implements AddListDialog.AddList
     private SQLiteDatabase mDatabase;
     private ListAdapter mAdapter;
 
+    private ArrayList<ListItemModel> dataList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +40,26 @@ public class MenuList extends AppCompatActivity implements AddListDialog.AddList
         MenuListDBHelper dbHelper = new MenuListDBHelper(this);
         mDatabase = dbHelper.getWritableDatabase();
 
+        //TODO
         RecyclerView recyclerView =  findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new ListAdapter(this, getAllItems());
+        Cursor test = getAllItems();
+
+        this.dataList= new ArrayList<>();
+
+        for(test.moveToFirst(); !test.isAfterLast(); test.moveToNext()) {
+            //dataList.add(test.getString(test.getColumnIndex(MinimalistContract.ListEntry.COLUMN_NAME)));
+            ListItemModel temp = new ListItemModel(
+                    test.getLong(test.getColumnIndex(MinimalistContract.ListEntry._ID)),
+                    test.getString(test.getColumnIndex(MinimalistContract.ListEntry.COLUMN_NAME)));
+
+            dataList.add(temp);
+        }
+
+        Log.d("DEBUG", "onCreate: " + this.dataList);
+
+
+        mAdapter = new ListAdapter(this, this.dataList);
         recyclerView.setAdapter(mAdapter);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
@@ -86,13 +109,7 @@ public class MenuList extends AppCompatActivity implements AddListDialog.AddList
 
         switch ((int) id) {
             case 1 :
-                toastNotDeleted.show();
-                mAdapter.swapCursor(getAllItems());
-                break;
             case 2 :
-                toastNotDeleted.show();
-                mAdapter.swapCursor(getAllItems());
-                break;
             case 3 :
                 toastNotDeleted.show();
                 mAdapter.swapCursor(getAllItems());
