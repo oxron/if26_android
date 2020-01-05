@@ -69,13 +69,12 @@ public class MenuListActivity extends AppCompatActivity implements AddListDialog
         mAdapter.setOnItemClickListener(new ListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                getItemActivity(position);
+                getItemsActivity(position);
             }
-
         });
     }
 
-    private void getItemActivity(long id) {
+    private void getItemsActivity(long id) {
         Intent myIntent = new Intent(getBaseContext(), ItemsActivity.class);
         myIntent.putExtra("KEY_LIST", (int) id);
         startActivity(myIntent);

@@ -10,7 +10,7 @@ import fr.utt.if26t.minimalist.contract.MinimalistContract.*;
 
 public class MenuListDBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "minimalist.db";
-    public static final int DATABASE_VERSION = 19;
+    public static final int DATABASE_VERSION = 20;
 
     public MenuListDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

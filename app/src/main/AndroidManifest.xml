@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ItemsActivity"></activity>
+        <activity android:name=".ModifyItem"></activity>
         <activity android:name=".AddItem"></activity>
         <activity android:name=".MenuListActivity">
             <intent-filter>
