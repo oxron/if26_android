@@ -64,7 +64,7 @@ public class ModifyItem extends AppCompatActivity implements DatePickerDialog.On
             mImportant.setChecked(true);
         }
         if (dataOfItem.get(0).getDone() ==  1) {
-            mImportant.setChecked(true);
+            mDone.setChecked(true);
         }
         if (dataOfItem.get(0).getPlanifie() == 1){
             switchPlanifie.setChecked(true);
@@ -72,6 +72,7 @@ public class ModifyItem extends AppCompatActivity implements DatePickerDialog.On
             dateText2.setVisibility(View.VISIBLE);
             showCalendar.setVisibility(View.VISIBLE);
         }
+
         dateText.setText(dataOfItem.get(0).getDate());
 
         buttonModify.setOnClickListener(new View.OnClickListener()

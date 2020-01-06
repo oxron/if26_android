@@ -2,9 +2,14 @@ package fr.utt.if26t.minimalist.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,12 +43,20 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemsViewHolde
 
     public class ItemsViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView nameItem;
+        public TextView nameItem, dateItem;
+        public ImageView doneItem, importantItem;
+        public LinearLayout layoutItem;
 
         public ItemsViewHolder(@NonNull View itemView, final ItemAdapter.OnItemClickListener listener) {
             super(itemView);
 
             nameItem = itemView.findViewById(R.id.itemTextView);
+            dateItem = itemView.findViewById(R.id.dateItemTextView);
+            doneItem = itemView.findViewById(R.id.checkImg);
+            importantItem = itemView.findViewById(R.id.importantImg);
+            layoutItem = itemView.findViewById(R.id.layoutItem);
+
+
 
             itemView.setOnClickListener(new View.OnClickListener()  {
                 @Override
@@ -70,6 +83,17 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemsViewHolde
     public void onBindViewHolder(@NonNull ItemAdapter.ItemsViewHolder holder, int position) {
         holder.nameItem.setText(this.dataItems.get(position).getName());
         holder.itemView.setTag(this.dataItems.get(position).getId());
+        holder.dateItem.setText(this.dataItems.get(position).getDate());
+
+        if (dataItems.get(position).getDone() ==  1) {
+            holder.doneItem.setVisibility(View.VISIBLE);
+        }
+        if (dataItems.get(position).getPlanifie() ==  1) {
+            holder.dateItem.setVisibility(View.VISIBLE);
+        }
+        if (dataItems.get(position).getImportant() == 1){
+            holder.importantItem.setVisibility(View.VISIBLE);
+        }
     }
 
 

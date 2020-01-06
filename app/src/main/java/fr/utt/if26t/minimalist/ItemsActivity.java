@@ -23,6 +23,7 @@ import fr.utt.if26t.minimalist.adapter.ItemAdapter;
 import fr.utt.if26t.minimalist.contract.MinimalistContract;
 import fr.utt.if26t.minimalist.datahelper.MenuListDBHelper;
 import fr.utt.if26t.minimalist.model.ItemModel;
+import fr.utt.if26t.minimalist.model.ListModel;
 
 public class ItemsActivity extends AppCompatActivity {
     private TextView mTextView;
@@ -30,6 +31,7 @@ public class ItemsActivity extends AppCompatActivity {
     private SQLiteDatabase mDatabase;
     private ItemAdapter mAdapter;
     private ArrayList<ItemModel> dataItems;
+    private ArrayList<ListModel> mTitleList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +47,14 @@ public class ItemsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         getDataItems();
+        getListName();
+
 
         mAdapter = new ItemAdapter(this, this.dataItems);
         recyclerView.setAdapter(mAdapter);
 
         mTextView = findViewById(R.id.positionTextView);
-        mTextView.setText(String.valueOf(intListId));
+        mTextView.setText(mTitleList.get(0).getName());
 
         FloatingActionButton mButtonAdd  = findViewById(R.id.buttonAdd);
         mButtonAdd.setOnClickListener(new View.OnClickListener()
@@ -167,6 +171,31 @@ public class ItemsActivity extends AppCompatActivity {
                     listItems.getInt(listItems.getColumnIndex(MinimalistContract.ItemEntry.COLUMN_DONE)),
                     listItems.getInt(listItems.getColumnIndex(MinimalistContract.ItemEntry.COLUMN_LIST)));
             dataItems.add(temp);
+        }
+
+
+
+
+
+    }
+
+    public void getListName() {
+        Cursor titleList = mDatabase.query(MinimalistContract.ListEntry.TABLE_NAME,
+                null,
+                MinimalistContract.ListEntry._ID + " = " + intListId,
+                null,
+                null,
+                null,
+                null);
+
+        this.mTitleList = new ArrayList<>();
+
+        for(titleList.moveToFirst(); !titleList.isAfterLast(); titleList.moveToNext()) {
+            //dataList.add(test.getString(test.getColumnIndex(MinimalistContract.ListEntry.COLUMN_NAME)));
+            ListModel temp = new ListModel(
+                    titleList.getLong(titleList.getColumnIndex(MinimalistContract.ListEntry._ID)),
+                    titleList.getString(titleList.getColumnIndex(MinimalistContract.ListEntry.COLUMN_NAME)));
+            mTitleList.add(temp);
         }
     }
 }

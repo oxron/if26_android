@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -14,17 +16,54 @@
             android:background="#F9F9F9"
             android:backgroundTint="#F9F9F9">
 
-
-            <TextView
-                android:id="@+id/itemTextView"
-                android:layout_width="294dp"
+            <LinearLayout
+                android:id="@+id/layoutItem"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                android:text="Empty Item"
-                android:textColor="@android:color/black"
-                android:textSize="20sp" />
+                android:background="#FFFFFF"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/itemTextView"
+                    android:layout_width="241dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="7dp"
+                    android:text="Empty Item"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:id="@+id/checkImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    app:srcCompat="@drawable/ic_check_black_24dp" />
+
+                <ImageView
+                    android:id="@+id/importantImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    app:srcCompat="@drawable/ic_priority_high_black_24dp" />
+
+                <TextView
+                    android:id="@+id/dateItemTextView"
+                    android:layout_width="67dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_weight="1"
+                    android:text="date"
+                    android:textColor="@android:color/black"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
         </RelativeLayout>
 
 
