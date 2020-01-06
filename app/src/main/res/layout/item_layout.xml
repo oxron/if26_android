@@ -25,6 +25,16 @@
                 android:padding="5dp">
 
                 <TextView
+                    android:id="@+id/dateItemTextView"
+                    android:layout_width="83dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_weight="1"
+                    android:text="date"
+                    android:textColor="@android:color/black"
+                    android:visibility="invisible" />
+
+                <TextView
                     android:id="@+id/itemTextView"
                     android:layout_width="241dp"
                     android:layout_height="wrap_content"
@@ -53,15 +63,6 @@
                     android:visibility="invisible"
                     app:srcCompat="@drawable/ic_priority_high_black_24dp" />
 
-                <TextView
-                    android:id="@+id/dateItemTextView"
-                    android:layout_width="67dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_weight="1"
-                    android:text="date"
-                    android:textColor="@android:color/black"
-                    android:visibility="invisible" />
             </LinearLayout>
 
         </RelativeLayout>
